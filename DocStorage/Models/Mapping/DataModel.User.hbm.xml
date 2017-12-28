@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="DocStorage" namespace="DocStorage" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="User" table="Users" schema="dbo">
+    <id name="UserId" type="Int32">
+      <column name="UserId" not-null="true" precision="10" scale="0" sql-type="INT" />
+      <generator class="identity" />
+    </id>
+    <property name="UserName" type="String">
+      <column name="UserName" not-null="true" length="50" sql-type="NVARCHAR(50)" />
+    </property>
+    <property name="Password" type="String">
+      <column name="Password" not-null="true" length="50" sql-type="NVARCHAR(50)" />
+    </property>
+    <set name="Documents" inverse="true" generic="true">
+      <key>
+        <column name="UserId" />
+      </key>
+      <one-to-many class="Document" />
+    </set>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "CreateUsers";
+}
+
+</br>
+
+@using (Html.BeginForm("CreateUsers", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div>
+        <p>База данных будет очищена и будут добавлены три пользователя: ivanov, petrov и sidorov с паролями идентичными логинам</p>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-10">
+            <input type="submit" class="btn btn-success" value="Обновить базу данных" />
+            @Html.ActionLink("Назад", "Index", "Home" , routeValues: null, htmlAttributes:  new { type="button", @class="btn btn-default" })
+        </div>
+    </div>
+}

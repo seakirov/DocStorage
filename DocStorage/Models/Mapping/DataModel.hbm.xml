@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="DocStorage" namespace="DocStorage" xmlns="urn:nhibernate-mapping-2.2">
+  <sql-query name="DropDbAndCreateUsers" callable="true">exec dbo.DropDbAndCreateUsers</sql-query>
+  <sql-query name="AddDocument" callable="true">
+    <query-param name="docName" type="String" />
+    <query-param name="created" type="DateTime" />
+    <query-param name="path" type="String" />
+    <query-param name="userId" type="Int32" />exec dbo.AddDocument :docName, :created, :path, :userId</sql-query>
+</hibernate-mapping>

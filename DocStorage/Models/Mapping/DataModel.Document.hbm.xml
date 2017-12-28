@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<hibernate-mapping assembly="DocStorage" namespace="DocStorage" xmlns="urn:nhibernate-mapping-2.2">
+  <class name="Document" table="Documents" schema="dbo">
+    <id name="Id" type="Int32">
+      <column name="Id" not-null="true" precision="10" scale="0" sql-type="INT" />
+      <generator class="identity" />
+    </id>
+    <property name="DocName" type="String">
+      <column name="DocName" not-null="true" sql-type="NVARCHAR(MAX)" />
+    </property>
+    <property name="Created" type="DateTime">
+      <column name="Created" not-null="true" sql-type="DATETIME" />
+    </property>
+    <property name="Path" type="String">
+      <column name="Path" not-null="true" sql-type="NVARCHAR(MAX)" />
+    </property>
+    <many-to-one name="User" class="User">
+      <column name="UserId" not-null="true" precision="10" scale="0" sql-type="INT" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

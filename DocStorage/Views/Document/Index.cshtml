@@ -1,0 +1,72 @@
+﻿@model DocStorage.Models.DocumentsWithPages
+
+@using DocStorage.Helpers
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Список документов";
+}
+
+<h2>Список документов</h2>
+
+@using (Html.BeginForm("Index", "Document", FormMethod.Get, new { @class="form-inline" }))
+{
+    <!--<div class="form-group">
+        @Html.ActionLink("Создать документ", "Create", routeValues: null, htmlAttributes:  new { type="button", @class="btn btn-default" })
+    </div>-->
+        <div class="form-group">
+        @Html.ActionLink("Загрузить документ", "Upload", routeValues: null, htmlAttributes:  new { type="button", @class="btn btn-default" })
+    </div>
+    <div class="form-group">   
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @class = "form-control", placeholder="Поиск по названию" }) 
+    </div>
+    <input type="submit" class="btn btn-default" value="Поиск" />
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Название", "Index", new { sortOrder = ViewBag.DocNameSortParm, currentFilter=ViewBag.CurrentFilter  })
+            </th>
+            <th>
+                @Html.ActionLink("Дата создания", "Index", new { sortOrder = ViewBag.CreatedSortParm, currentFilter=ViewBag.CurrentFilter  })
+            </th>
+            <th>
+                @Html.ActionLink("Владелец", "Index", new { sortOrder = ViewBag.UserSortParm, currentFilter=ViewBag.CurrentFilter  })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Documents) { 
+        <tr>        
+            <td>
+                @Html.DisplayFor(modelItem => item.DocName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                <a href='@Url.Action("View", "Document", new { id=item.Id })'>
+                    <img src='@Url.Content("~/Content/search-document.png")' />
+                </a>
+                @if (HttpContext.Current.User.Identity.Name == item.User.UserName)
+                {
+                    <a href='@Url.Action("Delete", "Document", new { id=item.Id })'>
+                        <img src='@Url.Content("~/Content/delete-document.png")' />
+                    </a>
+                }
+                
+            </td>   
+        </tr>   
+    }
+    <tbody>
+</table>
+<br />
+
+@Html.CreateButtons(Model.PageInfo, x => Url.Action("Index",new { page = x, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

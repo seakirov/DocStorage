@@ -1,0 +1,20 @@
+﻿@if (Request.IsAuthenticated) {
+
+    using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Привет " + User.Identity.Name + "!", "Login", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Выход</a></li>
+    </ul>
+    }
+    
+} else {
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Сбросить БД и создать новых пользователей", "CreateUsers", "Account", routeValues: null, htmlAttributes: new { id = "createLink" })</li>
+        <li>@Html.ActionLink("Вход", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}
